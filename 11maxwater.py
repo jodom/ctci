@@ -5,8 +5,8 @@ import unittest
 
 class Solution:
 
-	def area(self, a, b):
-		return min(a,b)
+	def area(self, height, i, j):
+		return min(height[i],height[j])*(j-i)
 
 	def maxArea(self, height):
 		"""
@@ -17,15 +17,19 @@ class Solution:
 		if not isinstance(height, list) or n < 2:
 			raise Exception('Invalid input')
 		elif n == 2:
-			return self.area(height[0], height[1])
+			return self.area(height, 0, 1)
 		else:
-			i, j = 0, 0
-			maxpair = [0,0]
+			i, j = 0, n-1
+			maxpair = [i, j]
 			_max = 0
-			while j < n:
-				current = self.area(height[i], height[j])
+			while i < j:
+				current = self.area(height, i, j)
 				_max = current if current > _max else _max
-				i, j = j, j+1
+				
+				if height[i] < height[j]:
+					i += 1
+				else:
+					j -= 1
 			return _max
 
 
